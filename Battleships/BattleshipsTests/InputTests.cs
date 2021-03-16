@@ -29,8 +29,13 @@ namespace BattleshipsTests
         [InlineData("10")]
         [InlineData("AA1")]
         [InlineData("A11")]
+        [InlineData("A20")]
         [InlineData("K1")]
         [InlineData("A0")]
+        [InlineData("0A")]
+        [InlineData("10A")]
+        [InlineData("AA")]
+        [InlineData("110")]
         public void GivenIncorrectInput_ItShouldReturnNull(string input)
         {
             Assert.Throws<ArgumentException>(() => Coordinates.TryCreate(input));

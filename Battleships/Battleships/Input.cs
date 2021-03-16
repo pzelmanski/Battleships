@@ -17,12 +17,15 @@ namespace Battleships
         {
             var columnIndex = char.ToUpper(inputValue[0]) - 64;
 
-            if (columnIndex < 0 || columnIndex > 10) 
+            if (columnIndex < 1 || columnIndex > 10) 
                 throw new ArgumentException($"Column out of index. Input: {inputValue}");
             if (inputValue.Length == 2)
             {
                 if (Int32.TryParse(inputValue[1].ToString(), out var rowIndex))
-                    return new Coordinates(rowIndex, columnIndex);
+                    if (rowIndex == 0)
+                        throw new ArgumentException("Row number is zero");
+                    else
+                        return new Coordinates(rowIndex, columnIndex);
                 throw new ArgumentException($"There was a problem with parsing row. Input: {inputValue}");
             }
 
