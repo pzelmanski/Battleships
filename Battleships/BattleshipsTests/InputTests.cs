@@ -1,5 +1,4 @@
-﻿using System;
-using Battleships;
+﻿using Battleships;
 using FluentAssertions;
 using Xunit;
 
@@ -19,8 +18,8 @@ namespace BattleshipsTests
         {
             var result = Coordinates.TryCreate(input);
             Assert.NotNull(result);
-            result.ColumnNumber.Should().Be(column);
-            result.RowNumber.Should().Be(row);
+            result.ColumnIndex.Should().Be(column);
+            result.RowIndex.Should().Be(row);
         }
 
         [Theory]
@@ -38,7 +37,7 @@ namespace BattleshipsTests
         [InlineData("110")]
         public void GivenIncorrectInput_ItShouldReturnNull(string input)
         {
-            Assert.Throws<ArgumentException>(() => Coordinates.TryCreate(input));
+            Coordinates.TryCreate(input).Should().BeNull();
         }
     }
 }
