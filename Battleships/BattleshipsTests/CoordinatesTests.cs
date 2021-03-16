@@ -75,7 +75,7 @@ namespace BattleshipsTests
             [InlineData(11, 10, false)]
             public void GivenRowAndColumn_ItShouldValidateValues(int row, int column, bool expected)
             {
-                Coordinates.AreCoordinatesValid(row, column).Should().Be(expected);
+                Coordinates.AreCoordinatesWithinBounds(row, column).Should().Be(expected);
             }
 
             [Theory]
