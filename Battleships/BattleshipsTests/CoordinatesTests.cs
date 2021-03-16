@@ -4,7 +4,7 @@ using Xunit;
 
 namespace BattleshipsTests
 {
-    public class InputTests
+    public class CoordinatesTests
     {
         [Theory]
         [InlineData("A1", 1, 1)]

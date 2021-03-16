@@ -1,11 +1,9 @@
-﻿using System;
-
-namespace Battleships
+﻿namespace Battleships
 {
     public class Coordinates
     {
-        public int RowIndex { get; private set; }
-        public int ColumnIndex { get; private set; }
+        public int RowIndex { get; }
+        public int ColumnIndex { get; }
         
         private Coordinates(int rowIndex, int columnIndex)
         {
@@ -17,18 +15,10 @@ namespace Battleships
         {
             var columnIndex = char.ToUpper(inputValue[0]) - 64;
             
-            if(Int32.TryParse(inputValue.Substring(1), out var rowIndex))
+            if(int.TryParse(inputValue.Substring(1), out var rowIndex))
                 if (rowIndex < 11 && rowIndex > 0 && columnIndex < 11 && columnIndex > 0)
                     return new Coordinates(rowIndex, columnIndex);
             return null;
         }
-    }
-    
-    public class Input
-    {
-        // public Coordinates TryGet(string inputValue)
-        // {
-        //     
-        // }
     }
 }
