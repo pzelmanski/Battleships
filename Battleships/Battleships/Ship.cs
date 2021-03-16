@@ -17,11 +17,15 @@ namespace Battleships
         right = 3
     }
     
-    public class ShipSingleSegmentFactory
+    public class ShipFactory
     {
         public ShipSingleSegment GetNextOrNull(ShipSingleSegment s, GridDirection direction)
         {
-
+            // get initial coordinates
+            // try to generate N next segments, where N is ship length
+            // if out of bounds of grid, try again
+            // if collision with existing ships, try again
+            // return ship
             throw new NotImplementedException();
         }
     }
