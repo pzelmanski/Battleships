@@ -22,13 +22,6 @@ namespace Battleships
         public ShipSingleSegment GetNextOrNull(ShipSingleSegment s, GridDirection direction)
         {
 
-            var coordinates = direction switch
-            {
-                GridDirection.up => (s.Coordinates.RowIndex, s.Coordinates.ColumnIndex - 1),
-                GridDirection.down => (s.Coordinates.RowIndex, s.Coordinates.ColumnIndex + 1),
-                GridDirection.left => (s.Coordinates.RowIndex - 1, s.Coordinates.ColumnIndex),
-                GridDirection.right => (s.Coordinates.RowIndex + 1, s.Coordinates.ColumnIndex)
-            };
             throw new NotImplementedException();
         }
     }

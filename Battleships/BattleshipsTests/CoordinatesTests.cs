@@ -48,9 +48,21 @@ namespace BattleshipsTests
         [InlineData(10, 10, true)]
         [InlineData(10, 11, false)]
         [InlineData(11, 10, false)]
-        public void GivenWorAndColumn_ItShouldValidateValues(int row, int column, bool expected)
+        public void GivenRowAndColumn_ItShouldValidateValues(int row, int column, bool expected)
         {
             Coordinates.AreCoordinatesValid(row, column).Should().Be(expected);
+        }
+
+        [Theory]
+        [InlineData(2, 2, GridDirection.up)]
+        [InlineData(2, 2, GridDirection.left)]
+        [InlineData(9, 9, GridDirection.down)]
+        [InlineData(9, 9, GridDirection.right)]
+        public void GivenCoordinatesAndDirection_WhenNextCoordinateValid_ItShouldReturnCoordinate(int row, int column, GridDirection direction)
+        {
+            var coordinate = Coordinates.CreateOrThrow(row, column);
+            var result = coordinate.TryCreateNext(direction);
+            result.Should().NotBeNull();
         }
     }
 }
