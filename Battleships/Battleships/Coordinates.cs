@@ -18,14 +18,14 @@ namespace Battleships
             var column = char.ToUpper(inputValue[0]) - 64;
             
             if(int.TryParse(inputValue.Substring(1), out var row))
-                if (IsSingleWithinBounds(row) && IsSingleWithinBounds(column))
+                if (IsWithinBounds(row) && IsWithinBounds(column))
                     return new Coordinates(row, column);
             return null;
         }
 
         public static Coordinates CreateOrThrow(int row, int column)
         {
-            if(IsSingleWithinBounds(row) && IsSingleWithinBounds(column))
+            if(IsWithinBounds(row) && IsWithinBounds(column))
                 return new Coordinates(row, column);
             throw new InvalidOperationException($"Trying to create invalid coordinates (row, col): ({row}, {column})");
         }
@@ -40,14 +40,14 @@ namespace Battleships
                 GridDirection.right => (RowIndex, ColumnIndex + 1),
                 _ => throw new ArgumentOutOfRangeException(nameof(direction), direction, null)
             };
-            if (IsSingleWithinBounds(c.Item1) && IsSingleWithinBounds(c.Item2))
+            if (IsWithinBounds(c.Item1) && IsWithinBounds(c.Item2))
                 return new Coordinates(c.Item1, c.Item2);
             return null;
         }
         
-        public static bool AreCoordinatesWithinBounds(int row, int column) => IsSingleWithinBounds(row) && IsSingleWithinBounds(column);
+        public static bool AreCoordinatesWithinBounds(int row, int column) => IsWithinBounds(row) && IsWithinBounds(column);
 
-        private static bool IsSingleWithinBounds(int value) => value < 11 && value > 0;
+        private static bool IsWithinBounds(int rowOrColumn) => rowOrColumn < 11 && rowOrColumn > 0;
 
         public bool Equals(Coordinates? other)
         {
