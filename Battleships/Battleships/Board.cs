@@ -3,29 +3,22 @@ using System.Collections.Generic;
 
 namespace Battleships
 {
-    public class ShipCoordinates
+    public enum HitStatus
     {
-        public readonly int Row;
-        public readonly int Column;
-
-        private ShipCoordinates(int row, int column)
-        {
-            Row = row;
-            Column = column;
-        }
-
-        public static ShipCoordinates CreateOrThrow(int row, int column)
-        {
-            if(row > 0 && row < 11 && column > 0 && column < 11)
-                return new ShipCoordinates(row, column);
-            throw new InvalidOperationException($"Trying to create invalid coordinates (row, col): ({row}, {column})");
-        }
+        Miss = 0,
+        Hit = 1,
+        Sink = 2
     }
     
     public class Ship
     {
         public ShipCoordinates StartCoordinates { get; }
         public ShipCoordinates EndCoordinates { get; }
+
+        public HitStatus GetHitStatus(Coordinates c)
+        {
+            return HitStatus.Miss;
+        }
     }
     
     public class Board
