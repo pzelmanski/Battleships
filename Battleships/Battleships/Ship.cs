@@ -3,29 +3,25 @@ using System.Collections.Generic;
 
 namespace Battleships
 {
-    public class ShipCoordinates
+    public class ShipSingleSegment
     {
-        public Coordinates StartCoordinates { get; }
-        public Coordinates EndCoordinates { get; }
-        private ShipCoordinates(Coordinates startCoordinates, Coordinates endCoordinates)
-        {
-            StartCoordinates = startCoordinates;
-            EndCoordinates = endCoordinates;
-        }
-
-        public ShipCoordinates CreateCoordinates(int shipLength, List<ShipCoordinates> otherShipCoordinates)
-        {
-            throw new NotImplementedException();
-        }
+        public Coordinates Coordinates { get; }
+        public bool IsHit { get; private set; }
+        
     }
-    
     
     public class Ship
     {
-        private ShipCoordinates Coordinates { get; }
-        public HitStatus GetHitStatus(Coordinates c)
+        public List<ShipSingleSegment> Segments { get; }
+        
+        private Ship(List<ShipSingleSegment> segments)
         {
-            return HitStatus.Miss;
+            Segments = segments;
+        }
+
+        public Ship CreateShip(int shipLength, List<Ship> otherShips)
+        {
+            throw new NotImplementedException();
         }
     }
 }
