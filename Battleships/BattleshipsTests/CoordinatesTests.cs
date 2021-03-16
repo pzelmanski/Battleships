@@ -16,7 +16,7 @@ namespace BattleshipsTests
         [InlineData("J10", 10, 10)]
         public void GivenCorrectInput_ItShouldReturnCoordinates(string input, int column, int row)
         {
-            var result = Coordinates.TryCreate(input);
+            var result = Coordinates.TryCreateFromInput(input);
             Assert.NotNull(result);
             result.ColumnIndex.Should().Be(column);
             result.RowIndex.Should().Be(row);
@@ -37,7 +37,7 @@ namespace BattleshipsTests
         [InlineData("110")]
         public void GivenIncorrectInput_ItShouldReturnNull(string input)
         {
-            Coordinates.TryCreate(input).Should().BeNull();
+            Coordinates.TryCreateFromInput(input).Should().BeNull();
         }
     }
 }

@@ -14,9 +14,9 @@ namespace BattleshipsTests
         [InlineData(5, 5)]
         public void GivenCorrectRowAndColumn_ItShouldReturnCoordinates(int row, int column)
         {
-            var result = ShipCoordinates.CreateOrThrow(row, column);
-            result.Row.Should().Be(row);
-            result.Column.Should().Be(column);
+            var result = Coordinates.CreateOrThrow(row, column);
+            result.RowIndex.Should().Be(row);
+            result.ColumnIndex.Should().Be(column);
         }
 
         [Theory]
@@ -26,7 +26,7 @@ namespace BattleshipsTests
         [InlineData(1, 11)]
         public void GivenIncorrectRowOrColumn_ItShouldThrow(int row, int column)
         {
-            Assert.Throws<InvalidOperationException>(() => ShipCoordinates.CreateOrThrow(row, column));
+            Assert.Throws<InvalidOperationException>(() => Coordinates.CreateOrThrow(row, column));
         }
     }
 }
