@@ -2,7 +2,7 @@
 
 namespace Battleships
 {
-    public class Coordinates
+    public class Coordinates : IEquatable<Coordinates>
     {
         public int RowIndex { get; }
         public int ColumnIndex { get; }
@@ -34,10 +34,10 @@ namespace Battleships
         {
             var c = direction switch
             {
-                GridDirection.up => (RowIndex, ColumnIndex - 1),
-                GridDirection.down => (RowIndex, ColumnIndex + 1),
-                GridDirection.left => (RowIndex - 1, ColumnIndex),
-                GridDirection.right => (RowIndex + 1, ColumnIndex),
+                GridDirection.up => (RowIndex - 1, ColumnIndex),
+                GridDirection.down => (RowIndex + 1, ColumnIndex),
+                GridDirection.left => (RowIndex, ColumnIndex - 1),
+                GridDirection.right => (RowIndex, ColumnIndex + 1),
                 _ => throw new ArgumentOutOfRangeException(nameof(direction), direction, null)
             };
             if (IsSingleValueValid(c.Item1) && IsSingleValueValid(c.Item2))
@@ -48,5 +48,25 @@ namespace Battleships
         public static bool AreCoordinatesValid(int row, int column) => IsSingleValueValid(row) && IsSingleValueValid(column);
 
         private static bool IsSingleValueValid(int value) => value < 11 && value > 0;
+
+        public bool Equals(Coordinates? other)
+        {
+            if (ReferenceEquals(null, other)) return false;
+            if (ReferenceEquals(this, other)) return true;
+            return RowIndex == other.RowIndex && ColumnIndex == other.ColumnIndex;
+        }
+
+        public override bool Equals(object? obj)
+        {
+            if (ReferenceEquals(null, obj)) return false;
+            if (ReferenceEquals(this, obj)) return true;
+            if (obj.GetType() != this.GetType()) return false;
+            return Equals((Coordinates) obj);
+        }
+
+        public override int GetHashCode()
+        {
+            return HashCode.Combine(RowIndex, ColumnIndex);
+        }
     }
 }

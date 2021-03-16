@@ -58,11 +58,57 @@ namespace BattleshipsTests
         [InlineData(2, 2, GridDirection.left)]
         [InlineData(9, 9, GridDirection.down)]
         [InlineData(9, 9, GridDirection.right)]
-        public void GivenCoordinatesAndDirection_WhenNextCoordinateValid_ItShouldReturnCoordinate(int row, int column, GridDirection direction)
+        public void GivenCoordinatesAndDirection_WhenNextCoordinateValid_ItShouldReturnCoordinate(int row, int column,
+            GridDirection direction)
         {
             var coordinate = Coordinates.CreateOrThrow(row, column);
             var result = coordinate.TryCreateNext(direction);
             result.Should().NotBeNull();
+        }
+
+        [Theory]
+        [InlineData(2, 2, GridDirection.up, 1, 2)]
+        [InlineData(2, 2, GridDirection.left, 2, 1)]
+        [InlineData(9, 9, GridDirection.down, 10, 9)]
+        [InlineData(9, 9, GridDirection.right, 9, 10)]
+        public void GivenCoordinatesAndDirection_WhenNextCoordinateValid_NewCoordinateValuesShouldRespectDirection(
+            int beforeRow, int beforeColumn, GridDirection direction, int afterRow, int afterColumn)
+        {
+            var coordinateBefore = Coordinates.CreateOrThrow(beforeRow, beforeColumn);
+            var expectedCoordinate = Coordinates.CreateOrThrow(afterRow, afterColumn);
+
+            var result = coordinateBefore.TryCreateNext(direction);
+            result.Should().Be(expectedCoordinate);
+        }
+
+        [Theory]
+        [InlineData(1, 2, GridDirection.up)]
+        [InlineData(2, 1, GridDirection.left)]
+        [InlineData(10, 9, GridDirection.down)]
+        [InlineData(9, 10, GridDirection.right)]
+        public void GivenCoordinatesAndDirection_WhenNextCoordinateInvalid_ShouldReturnNull(
+            int beforeRow, int beforeColumn, GridDirection direction)
+        {
+            var coordinateBefore = Coordinates.CreateOrThrow(beforeRow, beforeColumn);
+
+            var result = coordinateBefore.TryCreateNext(direction);
+            result.Should().BeNull();
+        }
+
+        [Fact]
+        public void GivenTwoCoordinates_WhenRowAndColumnEquals_EqualsShouldBeTrue()
+        {
+            var firstCoordinate = Coordinates.CreateOrThrow(3, 7);
+            var secondCoordinate = Coordinates.CreateOrThrow(3, 7);
+            firstCoordinate.Should().Be(secondCoordinate);
+        }
+        
+        [Fact]
+        public void GivenTwoCoordinates_WhenRowAndColumnDoesNotEquals_EqualsShouldBeTrue()
+        {
+            var firstCoordinate = Coordinates.CreateOrThrow(3, 7);
+            var secondCoordinate = Coordinates.CreateOrThrow(7, 3);
+            firstCoordinate.Should().NotBe(secondCoordinate);
         }
     }
 }
