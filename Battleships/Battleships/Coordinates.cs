@@ -30,9 +30,8 @@ namespace Battleships
             throw new InvalidOperationException($"Trying to create invalid coordinates (row, col): ({row}, {column})");
         }
 
-        private static bool IsSingleValueValid(int value)
-        {
-            return value < 11 && value > 0;
-        }
+        public static bool AreCoordinatesValid(int row, int column) => IsSingleValueValid(row) && IsSingleValueValid(column);
+
+        private static bool IsSingleValueValid(int value) => value < 11 && value > 0;
     }
 }

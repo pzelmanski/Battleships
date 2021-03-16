@@ -39,5 +39,18 @@ namespace BattleshipsTests
         {
             Coordinates.TryCreateFromInput(input).Should().BeNull();
         }
+
+        [Theory]
+        [InlineData(0, 0, false)]
+        [InlineData(1, 0, false)]
+        [InlineData(0, 1, false)]
+        [InlineData(1, 1, true)]
+        [InlineData(10, 10, true)]
+        [InlineData(10, 11, false)]
+        [InlineData(11, 10, false)]
+        public void GivenWorAndColumn_ItShouldValidateValues(int row, int column, bool expected)
+        {
+            Coordinates.AreCoordinatesValid(row, column).Should().Be(expected);
+        }
     }
 }
