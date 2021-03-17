@@ -9,7 +9,7 @@ namespace BattleshipsTests
     public class ShipFactoryTests
     {
         [Fact]
-        public void GivenCorrectShipPosition_ItShouldReturnShip()
+        public void GivenCorrectShipPosition_WhenGridDirectionHorizontal_ItShouldReturnShip()
         {
             var result = ShipFactory.TryCreateShip(Coordinates.CreateOrThrow(1, 1), GridDirection.Right, 4,
                 new List<Ship>());
@@ -21,6 +21,22 @@ namespace BattleshipsTests
             for (int i = 1; i < 4; i++)
             {
                 result.Segments.Any(x => x.Coordinates.ColumnIndex == i).Should().BeTrue();
+            }
+        }
+
+        [Fact]
+        public void GivenCorrectShipPosition_WhenGridDirectionVertical_ItShouldReturnShip()
+        {
+            var result = ShipFactory.TryCreateShip(Coordinates.CreateOrThrow(1, 1), GridDirection.Down, 4,
+                new List<Ship>());
+
+            Assert.NotNull(result);
+            result.Segments.Count.Should().Be(4);
+            result.Segments.All(x => x.Coordinates.ColumnIndex == 1).Should().BeTrue();
+            result.Segments.All(x => x.IsHit == false).Should().BeTrue();
+            for (int i = 1; i < 4; i++)
+            {
+                result.Segments.Any(x => x.Coordinates.RowIndex == i).Should().BeTrue();
             }
         }
 
