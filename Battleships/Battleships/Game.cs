@@ -13,7 +13,8 @@ namespace Battleships
 
     public class Game
     {
-        public List<Ship> Ships { get; } 
+        public List<Ship> Ships { get; }
+        private int _shipIdsCounter = 1;
 
         public Game(IEnumerable<int> shipLengths)
         {
@@ -35,9 +36,10 @@ namespace Battleships
                 var row = r.Next(1, 10);
                 var column = r.Next(1, 10);
                 var direction = (GridDirection) r.Next(1, 4);
-                newShip = ShipFactory.TryCreateShip(Coordinates.CreateOrThrow(row, column), direction, length, currentShips);
+                newShip = ShipFactory.TryCreateShip(Coordinates.CreateOrThrow(row, column), direction, length, currentShips, _shipIdsCounter);
             }
 
+            _shipIdsCounter++;
             return newShip;
         }
 

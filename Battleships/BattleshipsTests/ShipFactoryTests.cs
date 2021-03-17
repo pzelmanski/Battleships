@@ -12,7 +12,7 @@ namespace BattleshipsTests
         public void GivenCorrectShipPosition_WhenGridDirectionHorizontal_ItShouldReturnShip()
         {
             var result = ShipFactory.TryCreateShip(Coordinates.CreateOrThrow(1, 1), GridDirection.Right, 4,
-                new List<Ship>());
+                new List<Ship>(), 1);
 
             Assert.NotNull(result);
             result.Segments.Count.Should().Be(4);
@@ -28,7 +28,7 @@ namespace BattleshipsTests
         public void GivenCorrectShipPosition_WhenGridDirectionVertical_ItShouldReturnShip()
         {
             var result = ShipFactory.TryCreateShip(Coordinates.CreateOrThrow(1, 1), GridDirection.Down, 4,
-                new List<Ship>());
+                new List<Ship>(), 1);
 
             Assert.NotNull(result);
             result.Segments.Count.Should().Be(4);
@@ -44,7 +44,7 @@ namespace BattleshipsTests
         public void GivenIncorrectShipPosition_ItShouldReturnNull()
         {
             var result =
-                ShipFactory.TryCreateShip(Coordinates.CreateOrThrow(1, 1), GridDirection.Up, 4, new List<Ship>());
+                ShipFactory.TryCreateShip(Coordinates.CreateOrThrow(1, 1), GridDirection.Up, 4, new List<Ship>(), 1);
             result.Should().BeNull();
         }
 
@@ -52,10 +52,10 @@ namespace BattleshipsTests
         public void GivenCorrectShipPosition_WhenCollidingWithAnotherShip_ItShouldReturnNull()
         {
             var collidingShip = ShipFactory.TryCreateShip(Coordinates.CreateOrThrow(2, 1), GridDirection.Right, 4,
-                new List<Ship>());
+                new List<Ship>(), 1);
 
             var result = ShipFactory.TryCreateShip(Coordinates.CreateOrThrow(1, 1), GridDirection.Down, 4,
-                new List<Ship> {collidingShip});
+                new List<Ship> {collidingShip}, 1);
 
             result.Should().BeNull();
         }
@@ -64,10 +64,10 @@ namespace BattleshipsTests
         public void GivenCorrectShipPosition_WhenNotCollidingWithAnotherShip_ItShouldReturnShip()
         {
             var collidingShip = ShipFactory.TryCreateShip(Coordinates.CreateOrThrow(2, 1), GridDirection.Right, 4,
-                new List<Ship>());
+                new List<Ship>(), 1);
 
             var result = ShipFactory.TryCreateShip(Coordinates.CreateOrThrow(1, 1), GridDirection.Right, 4,
-                new List<Ship> {collidingShip});
+                new List<Ship> {collidingShip}, 1);
 
             result.Should().NotBeNull();
         }

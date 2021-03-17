@@ -12,10 +12,9 @@ namespace Battleships
         Right = 3
     }
 
-    public class ShipFactory
+    public static class ShipFactory
     {
-        private static int _shipIdCounter = 0;
-        public static Ship? TryCreateShip(Coordinates initialPosition, GridDirection direction, int shipLength, List<Ship> otherShips)
+        public static Ship? TryCreateShip(Coordinates initialPosition, GridDirection direction, int shipLength, List<Ship> otherShips, int shipIdsCounter)
         {
             var segments = new List<ShipSingleSegment>();
 
@@ -40,8 +39,7 @@ namespace Battleships
             if (isColliding)
                 return null;
             
-            _shipIdCounter++;
-            return new Ship(segments, _shipIdCounter);
+            return new Ship(segments, shipIdsCounter);
         }
     }
 }
