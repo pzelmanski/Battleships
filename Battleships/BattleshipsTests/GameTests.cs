@@ -15,6 +15,13 @@ namespace BattleshipsTests
         }
         
         [Fact]
+        public void GivenLengthsArray_ItShouldGenerateShipsWithUniqueIds()
+        {
+            var result = new Game(new[] {4, 4, 5});
+            result.Ships.Select(x => x.ShipId).Distinct().Should().HaveCount(3);
+        }
+        
+        [Fact]
         public void GivenAnotherLengthsArray_ItShouldGenerateCorrectAmountOfShips()
         {
             var result = new Game(new[] {1, 1, 1, 1, 1, 1, 1});

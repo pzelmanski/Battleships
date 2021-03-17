@@ -17,10 +17,11 @@ namespace Battleships
     public class Ship
     {
         public List<ShipSingleSegment> Segments { get; }
-        
-        public Ship(List<ShipSingleSegment> segments)
+        public int ShipId { get; }
+        public Ship(List<ShipSingleSegment> segments, int shipId)
         {
             Segments = segments;
+            ShipId = shipId;
         }
     }
 }

@@ -14,6 +14,7 @@ namespace Battleships
 
     public class ShipFactory
     {
+        private static int _shipIdCounter = 0;
         public static Ship? TryCreateShip(Coordinates initialPosition, GridDirection direction, int shipLength, List<Ship> otherShips)
         {
             var segments = new List<ShipSingleSegment>();
@@ -36,9 +37,11 @@ namespace Battleships
                     .Any(x => x.Segments
                         .Any(y => y.Coordinates.Equals(s))));
 
-            return isColliding
-                ? null
-                : new Ship(segments);
+            if (isColliding)
+                return null;
+            
+            _shipIdCounter++;
+            return new Ship(segments, _shipIdCounter);
         }
     }
 }

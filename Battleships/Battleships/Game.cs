@@ -43,12 +43,16 @@ namespace Battleships
 
         public void PrintBoard()
         {
-            var allShipCoordinates = Ships.SelectMany(x => x.Segments.Select(y => y.Coordinates)).ToList();
+            var allShipCoordinates = Ships.SelectMany(x => x.Segments.Select(y => (y.Coordinates, x.ShipId))).ToList();
             for (int i = 1; i < 11; i++)
             {
                 for (int j = 1; j < 11; j++)
                 {
-                    Console.Write(allShipCoordinates.Contains(Coordinates.CreateOrThrow(i, j)) ? "X " : "O ");
+                    var coords = allShipCoordinates.SingleOrDefault(x => x.Coordinates.Equals(Coordinates.CreateOrThrow(i, j)));
+                    if(coords.Equals(default))
+                        Console.Write("O ");
+                    else
+                        Console.Write($"{coords.ShipId} ");
                 }
                 Console.WriteLine();
             }
