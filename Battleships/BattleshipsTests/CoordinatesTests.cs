@@ -79,10 +79,10 @@ namespace BattleshipsTests
             }
 
             [Theory]
-            [InlineData(2, 2, GridDirection.up)]
-            [InlineData(2, 2, GridDirection.left)]
-            [InlineData(9, 9, GridDirection.down)]
-            [InlineData(9, 9, GridDirection.right)]
+            [InlineData(2, 2, GridDirection.Up)]
+            [InlineData(2, 2, GridDirection.Left)]
+            [InlineData(9, 9, GridDirection.Down)]
+            [InlineData(9, 9, GridDirection.Right)]
             public void GivenCoordinatesAndDirection_WhenNextCoordinateValid_ItShouldReturnCoordinate(int row,
                 int column,
                 GridDirection direction)
@@ -93,10 +93,10 @@ namespace BattleshipsTests
             }
 
             [Theory]
-            [InlineData(2, 2, GridDirection.up, 1, 2)]
-            [InlineData(2, 2, GridDirection.left, 2, 1)]
-            [InlineData(9, 9, GridDirection.down, 10, 9)]
-            [InlineData(9, 9, GridDirection.right, 9, 10)]
+            [InlineData(2, 2, GridDirection.Up, 1, 2)]
+            [InlineData(2, 2, GridDirection.Left, 2, 1)]
+            [InlineData(9, 9, GridDirection.Down, 10, 9)]
+            [InlineData(9, 9, GridDirection.Right, 9, 10)]
             public void GivenCoordinatesAndDirection_WhenNextCoordinateValid_NewCoordinateValuesShouldRespectDirection(
                 int beforeRow, int beforeColumn, GridDirection direction, int afterRow, int afterColumn)
             {
@@ -108,10 +108,10 @@ namespace BattleshipsTests
             }
 
             [Theory]
-            [InlineData(1, 2, GridDirection.up)]
-            [InlineData(2, 1, GridDirection.left)]
-            [InlineData(10, 9, GridDirection.down)]
-            [InlineData(9, 10, GridDirection.right)]
+            [InlineData(1, 2, GridDirection.Up)]
+            [InlineData(2, 1, GridDirection.Left)]
+            [InlineData(10, 9, GridDirection.Down)]
+            [InlineData(9, 10, GridDirection.Right)]
             public void GivenCoordinatesAndDirection_WhenNextCoordinateInvalid_ShouldReturnNull(
                 int beforeRow, int beforeColumn, GridDirection direction)
             {

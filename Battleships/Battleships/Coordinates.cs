@@ -34,10 +34,10 @@ namespace Battleships
         {
             var c = direction switch
             {
-                GridDirection.up => (RowIndex - 1, ColumnIndex),
-                GridDirection.down => (RowIndex + 1, ColumnIndex),
-                GridDirection.left => (RowIndex, ColumnIndex - 1),
-                GridDirection.right => (RowIndex, ColumnIndex + 1),
+                GridDirection.Up => (RowIndex - 1, ColumnIndex),
+                GridDirection.Down => (RowIndex + 1, ColumnIndex),
+                GridDirection.Left => (RowIndex, ColumnIndex - 1),
+                GridDirection.Right => (RowIndex, ColumnIndex + 1),
                 _ => throw new ArgumentOutOfRangeException(nameof(direction), direction, null)
             };
             if (IsWithinBounds(c.Item1) && IsWithinBounds(c.Item2))
