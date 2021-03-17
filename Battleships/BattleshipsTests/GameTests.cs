@@ -13,6 +13,13 @@ namespace BattleshipsTests
             var result = new Game(new[] {4, 4, 5});
             result.Ships.Count.Should().Be(3);
         }
+        
+        [Fact]
+        public void GivenAnotherLengthsArray_ItShouldGenerateCorrectAmountOfShips()
+        {
+            var result = new Game(new[] {1, 1, 1, 1, 1, 1, 1});
+            result.Ships.Count.Should().Be(7);
+        }
 
         // TODO: Its a flaky test
         [Fact]
