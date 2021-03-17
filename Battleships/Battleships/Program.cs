@@ -17,7 +17,8 @@ namespace Battleships
     {
         static void Main(string[] args)
         {
-            Console.WriteLine("Hello World!");
+            var game = new Game(new[] {4, 4, 5});
+            game.PrintBoard();
             Console.ReadKey();
         }
     }

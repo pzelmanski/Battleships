@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Battleships
 {
@@ -38,6 +39,19 @@ namespace Battleships
             }
 
             return newShip;
+        }
+
+        public void PrintBoard()
+        {
+            var allShipCoordinates = Ships.SelectMany(x => x.Segments.Select(y => y.Coordinates)).ToList();
+            for (int i = 1; i < 11; i++)
+            {
+                for (int j = 1; j < 11; j++)
+                {
+                    Console.Write(allShipCoordinates.Contains(Coordinates.CreateOrThrow(i, j)) ? "X " : "O ");
+                }
+                Console.WriteLine();
+            }
         }
     }
 }
