@@ -20,7 +20,7 @@ namespace Battleships
         {
             var game = new Game(new[] {4, 4, 5});
             PrintBoard(game);
-            
+
             // game loop
             while (true)
             {
@@ -33,8 +33,8 @@ namespace Battleships
                 }
 
                 var hitStatus = game.NextRound(hitCoordinates);
-                
-                switch(hitStatus)
+
+                switch (hitStatus)
                 {
                     case HitStatus.Miss:
                         Console.WriteLine("Miss!");
@@ -48,25 +48,39 @@ namespace Battleships
                     default:
                         throw new ArgumentOutOfRangeException();
                 }
+
+                PrintBoard(game);
+                
+                if (game.IsFinished())
+                    break;
             }
-            
-            
+
+            Console.WriteLine("END");
             Console.ReadKey();
         }
-        
-        public static void PrintBoard(Game game)
+
+        private static void PrintBoard(Game game)
         {
-            var allShipCoordinates = game.Ships.SelectMany(x => x.Segments.Select(y => (y.Coordinates, x.ShipId))).ToList();
             for (int i = 1; i < 11; i++)
             {
                 for (int j = 1; j < 11; j++)
                 {
-                    var coords = allShipCoordinates.SingleOrDefault(x => x.Coordinates.Equals(Coordinates.CreateOrThrow(i, j)));
-                    if(coords.Equals(default))
+                    bool isSegment = false;
+                    foreach (var ship in game.Ships)
+                    {
+                        var segmentHit =
+                            ship.Segments.SingleOrDefault(x => x.Coordinates.Equals(Coordinates.CreateOrThrow(i, j)));
+                        if (segmentHit is null)
+                            continue;
+                        isSegment = true;
+                        var symbol = segmentHit.IsHit ? "X" : ship.ShipId.ToString();
+                        Console.Write($"{symbol} ");
+                    }
+
+                    if (!isSegment)
                         Console.Write("O ");
-                    else
-                        Console.Write($"{coords.ShipId} ");
                 }
+
                 Console.WriteLine();
             }
         }
