@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-using System.Linq;
+﻿using System.Linq;
 using Battleships;
 using FluentAssertions;
 using Xunit;
@@ -43,24 +42,6 @@ namespace BattleshipsTests
                 var r = game.Ships.SelectMany(x => x.Segments.Select(y => y.Coordinates)).ToList();
                 r.Distinct().Count().Should().Be(r.Count(), game.GameDetailsToString());
             }
-        }
-    }
-
-    public class TestShipsFactory : IShipFactory
-    {
-        private readonly List<Ship?> _toReturn;
-        private int _returnCounter = 0;
-        public TestShipsFactory(List<Ship?> toReturn)
-        {
-            _toReturn = toReturn;
-        }
-        
-        public Ship? TryCreateShip(Coordinates initialPosition, GridDirection direction, int shipLength, List<Ship> otherShips,
-            int shipIdsCounter)
-        {
-            var returned = _toReturn[_returnCounter];
-            _returnCounter++;
-            return returned;
         }
     }
 

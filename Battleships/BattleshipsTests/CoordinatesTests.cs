@@ -19,7 +19,7 @@ namespace BattleshipsTests
         {
             var result = Coordinates.TryCreateFromInput(input);
             Assert.NotNull(result);
-            result!.ColumnIndex.Should().Be(column);
+            result.ColumnIndex.Should().Be(column);
             result.RowIndex.Should().Be(row);
         }
 
@@ -36,7 +36,6 @@ namespace BattleshipsTests
         [InlineData("10A")]
         [InlineData("AA")]
         [InlineData("110")]
-        [InlineData("")]
         public void GivenIncorrectInput_ItShouldReturnNull(string input)
         {
             Coordinates.TryCreateFromInput(input).Should().BeNull();

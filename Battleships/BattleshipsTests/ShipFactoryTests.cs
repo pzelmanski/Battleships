@@ -15,7 +15,7 @@ namespace BattleshipsTests
                 new List<Ship>(), 1);
 
             Assert.NotNull(result);
-            result!.Segments.Count.Should().Be(4);
+            result.Segments.Count.Should().Be(4);
             result.Segments.All(x => x.Coordinates.RowIndex == 1).Should().BeTrue();
             result.Segments.All(x => x.IsHit == false).Should().BeTrue();
             for (int i = 1; i < 4; i++)
@@ -31,7 +31,7 @@ namespace BattleshipsTests
                 new List<Ship>(), 1);
 
             Assert.NotNull(result);
-            result!.Segments.Count.Should().Be(4);
+            result.Segments.Count.Should().Be(4);
             result.Segments.All(x => x.Coordinates.ColumnIndex == 1).Should().BeTrue();
             result.Segments.All(x => x.IsHit == false).Should().BeTrue();
             for (int i = 1; i < 4; i++)
@@ -55,7 +55,7 @@ namespace BattleshipsTests
                 new List<Ship>(), 1);
 
             var result = new ShipFactory().TryCreateShip(Coordinates.CreateOrThrow(1, 1), GridDirection.Down, 4,
-                new List<Ship> {collidingShip!}, 1);
+                new List<Ship> {collidingShip}, 1);
 
             result.Should().BeNull();
         }
@@ -67,7 +67,7 @@ namespace BattleshipsTests
                 new List<Ship>(), 1);
 
             var result = new ShipFactory().TryCreateShip(Coordinates.CreateOrThrow(1, 1), GridDirection.Right, 4,
-                new List<Ship> {collidingShip!}, 1);
+                new List<Ship> {collidingShip}, 1);
 
             result.Should().NotBeNull();
         }
