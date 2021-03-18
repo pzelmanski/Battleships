@@ -14,15 +14,15 @@ namespace Battleships
     public class Game
     {
         public List<Ship> Ships { get; }
-        private int _shipIdsCounter = 1;
+        private int _nextShipId = 1;
 
         public Game(IEnumerable<int> shipLengths)
         {
             var ships = new List<Ship>();
-            foreach (var l in shipLengths)
-            {
+            
+            foreach (var l in shipLengths) 
                 ships.Add(GenerateShip(l, ships));
-            }
+            
             Ships = ships;
         }
 
@@ -36,10 +36,10 @@ namespace Battleships
                 var row = r.Next(1, 10);
                 var column = r.Next(1, 10);
                 var direction = (GridDirection) r.Next(1, 4);
-                newShip = ShipFactory.TryCreateShip(Coordinates.CreateOrThrow(row, column), direction, length, currentShips, _shipIdsCounter);
+                newShip = ShipFactory.TryCreateShip(Coordinates.CreateOrThrow(row, column), direction, length, currentShips, _nextShipId);
             }
 
-            _shipIdsCounter++;
+            _nextShipId++;
             return newShip;
         }
 

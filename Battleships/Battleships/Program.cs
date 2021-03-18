@@ -25,7 +25,7 @@ namespace Battleships
             while (true)
             {
                 var input = Console.ReadLine();
-                var hitCoordinates = Coordinates.TryCreateFromInput(input ?? "");
+                var hitCoordinates = Coordinates.TryCreateFromUserInput(input ?? "");
                 if (hitCoordinates is null)
                 {
                     Console.WriteLine("Incorrect user input. Try again");

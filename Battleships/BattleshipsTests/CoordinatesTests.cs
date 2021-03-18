@@ -17,7 +17,7 @@ namespace BattleshipsTests
         [InlineData("J10", 10, 10)]
         public void GivenCorrectInput_ItShouldReturnCoordinates(string input, int column, int row)
         {
-            var result = Coordinates.TryCreateFromInput(input);
+            var result = Coordinates.TryCreateFromUserInput(input);
             Assert.NotNull(result);
             result.ColumnIndex.Should().Be(column);
             result.RowIndex.Should().Be(row);
@@ -39,7 +39,7 @@ namespace BattleshipsTests
         [InlineData("")]
         public void GivenIncorrectInput_ItShouldReturnNull(string input)
         {
-            Coordinates.TryCreateFromInput(input).Should().BeNull();
+            Coordinates.TryCreateFromUserInput(input).Should().BeNull();
         }
 
         public class ShipRowCoordinatesTests
@@ -64,19 +64,6 @@ namespace BattleshipsTests
             public void GivenIncorrectRowOrColumn_ItShouldThrow(int row, int column)
             {
                 Assert.Throws<InvalidOperationException>(() => Coordinates.CreateOrThrow(row, column));
-            }
-
-            [Theory]
-            [InlineData(0, 0, false)]
-            [InlineData(1, 0, false)]
-            [InlineData(0, 1, false)]
-            [InlineData(1, 1, true)]
-            [InlineData(10, 10, true)]
-            [InlineData(10, 11, false)]
-            [InlineData(11, 10, false)]
-            public void GivenRowAndColumn_ItShouldValidateValues(int row, int column, bool expected)
-            {
-                Coordinates.AreCoordinatesWithinBounds(row, column).Should().Be(expected);
             }
 
             [Theory]
