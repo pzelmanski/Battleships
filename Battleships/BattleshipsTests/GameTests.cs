@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using Battleships;
 using FluentAssertions;
 using Xunit;
@@ -12,6 +13,12 @@ namespace BattleshipsTests
         {
             var result = new Game(new[] {4, 4, 5});
             result.Ships.Count.Should().Be(3, result.GameDetailsToString());
+        }
+
+        [Fact]
+        public void GivenLengthsArray_WhenItsImpossibleToGenerateShips_ItShouldThrow()
+        {
+            Assert.Throws<InvalidOperationException>(() => new Game(new [] {9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9}));
         }
         
         [Fact]

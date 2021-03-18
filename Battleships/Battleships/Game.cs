@@ -13,17 +13,13 @@ namespace Battleships
 
     public class Game
     {
-        public List<Ship> Ships { get; }
+        public List<Ship> Ships { get; } = new();
         private int _nextShipId = 1;
 
         public Game(IEnumerable<int> shipLengths)
         {
-            var ships = new List<Ship>();
-            
             foreach (var l in shipLengths) 
-                ships.Add(GenerateShip(l, ships));
-            
-            Ships = ships;
+                Ships.Add(GenerateShip(l, Ships));
         }
 
         private Ship GenerateShip(int length, List<Ship> currentShips)
@@ -31,13 +27,18 @@ namespace Battleships
             var r = new Random();
 
             Ship? newShip = null;
-            while (newShip is null)
+            for (int i = 0; i < 700; i++)
             {
                 var row = r.Next(1, 10);
                 var column = r.Next(1, 10);
                 var direction = (GridDirection) r.Next(1, 4);
                 newShip = ShipFactory.TryCreateShip(Coordinates.CreateOrThrow(row, column), direction, length, currentShips, _nextShipId);
+                if (newShip is { })
+                    break;
             }
+
+            if (newShip is null)
+                throw new InvalidOperationException("Unable to generate a ship");
 
             _nextShipId++;
             return newShip;
