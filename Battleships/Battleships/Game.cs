@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Battleships
 {
@@ -12,17 +13,10 @@ namespace Battleships
 
     public class Game
     {
-        public List<Ship> Ships { get; private set; }
+        public List<Ship> Ships { get; }
         private int _shipIdsCounter = 1;
-        private readonly IShipFactory _shipFactory;
 
-        public Game(IShipFactory shipFactory)
-        {
-            _shipFactory = shipFactory;
-            Ships = new List<Ship>();
-        }
-
-        public void Init(IEnumerable<int> shipLengths)
+        public Game(IEnumerable<int> shipLengths)
         {
             var ships = new List<Ship>();
             foreach (var l in shipLengths)
@@ -42,7 +36,7 @@ namespace Battleships
                 var row = r.Next(1, 10);
                 var column = r.Next(1, 10);
                 var direction = (GridDirection) r.Next(1, 4);
-                newShip = _shipFactory.TryCreateShip(Coordinates.CreateOrThrow(row, column), direction, length, currentShips, _shipIdsCounter);
+                newShip = ShipFactory.TryCreateShip(Coordinates.CreateOrThrow(row, column), direction, length, currentShips, _shipIdsCounter);
             }
 
             _shipIdsCounter++;

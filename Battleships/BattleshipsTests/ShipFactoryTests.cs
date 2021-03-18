@@ -11,7 +11,7 @@ namespace BattleshipsTests
         [Fact]
         public void GivenCorrectShipPosition_WhenGridDirectionHorizontal_ItShouldReturnShip()
         {
-            var result = new ShipFactory().TryCreateShip(Coordinates.CreateOrThrow(1, 1), GridDirection.Right, 4,
+            var result = ShipFactory.TryCreateShip(Coordinates.CreateOrThrow(1, 1), GridDirection.Right, 4,
                 new List<Ship>(), 1);
 
             Assert.NotNull(result);
@@ -27,7 +27,7 @@ namespace BattleshipsTests
         [Fact]
         public void GivenCorrectShipPosition_WhenGridDirectionVertical_ItShouldReturnShip()
         {
-            var result = new ShipFactory().TryCreateShip(Coordinates.CreateOrThrow(1, 1), GridDirection.Down, 4,
+            var result = ShipFactory.TryCreateShip(Coordinates.CreateOrThrow(1, 1), GridDirection.Down, 4,
                 new List<Ship>(), 1);
 
             Assert.NotNull(result);
@@ -44,17 +44,17 @@ namespace BattleshipsTests
         public void GivenIncorrectShipPosition_ItShouldReturnNull()
         {
             var result =
-                new ShipFactory().TryCreateShip(Coordinates.CreateOrThrow(1, 1), GridDirection.Up, 4, new List<Ship>(), 1);
+                ShipFactory.TryCreateShip(Coordinates.CreateOrThrow(1, 1), GridDirection.Up, 4, new List<Ship>(), 1);
             result.Should().BeNull();
         }
 
         [Fact]
         public void GivenCorrectShipPosition_WhenCollidingWithAnotherShip_ItShouldReturnNull()
         {
-            var collidingShip = new ShipFactory().TryCreateShip(Coordinates.CreateOrThrow(2, 1), GridDirection.Right, 4,
+            var collidingShip = ShipFactory.TryCreateShip(Coordinates.CreateOrThrow(2, 1), GridDirection.Right, 4,
                 new List<Ship>(), 1);
 
-            var result = new ShipFactory().TryCreateShip(Coordinates.CreateOrThrow(1, 1), GridDirection.Down, 4,
+            var result = ShipFactory.TryCreateShip(Coordinates.CreateOrThrow(1, 1), GridDirection.Down, 4,
                 new List<Ship> {collidingShip}, 1);
 
             result.Should().BeNull();
@@ -63,10 +63,10 @@ namespace BattleshipsTests
         [Fact]
         public void GivenCorrectShipPosition_WhenNotCollidingWithAnotherShip_ItShouldReturnShip()
         {
-            var collidingShip = new ShipFactory().TryCreateShip(Coordinates.CreateOrThrow(2, 1), GridDirection.Right, 4,
+            var collidingShip = ShipFactory.TryCreateShip(Coordinates.CreateOrThrow(2, 1), GridDirection.Right, 4,
                 new List<Ship>(), 1);
 
-            var result = new ShipFactory().TryCreateShip(Coordinates.CreateOrThrow(1, 1), GridDirection.Right, 4,
+            var result = ShipFactory.TryCreateShip(Coordinates.CreateOrThrow(1, 1), GridDirection.Right, 4,
                 new List<Ship> {collidingShip}, 1);
 
             result.Should().NotBeNull();

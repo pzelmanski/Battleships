@@ -12,15 +12,9 @@ namespace Battleships
         Right = 3
     }
 
-    public interface IShipFactory
+    public static class ShipFactory
     {
-        Ship? TryCreateShip(Coordinates initialPosition, GridDirection direction, int shipLength,
-            List<Ship> otherShips, int shipIdsCounter);
-    }
-
-    public class ShipFactory : IShipFactory
-    {
-        public Ship? TryCreateShip(Coordinates initialPosition, GridDirection direction, int shipLength, List<Ship> otherShips, int shipIdsCounter)
+        public static Ship? TryCreateShip(Coordinates initialPosition, GridDirection direction, int shipLength, List<Ship> otherShips, int shipIdsCounter)
         {
             var segments = new List<ShipSingleSegment>();
 
