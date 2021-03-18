@@ -28,17 +28,20 @@ namespace BattleshipsTests
             result.Ships.Count.Should().Be(7);
         }
 
-        // TODO: Its a flaky test
+        // TODO: Its a perfect case for property - based testing
         [Fact]
         public void GivenLengthsArray_ShipsShouldNotCollide()
         {
-            var result = new Game(new[] {4, 4, 5});
-            var r = result.Ships.SelectMany(x => x.Segments.Select(y => y.Coordinates)).ToList();
-            r.Distinct().Count().Should().Be(r.Count(), result.GameDetailsToString());
+            for (int i = 0; i < 100; i++)
+            {
+                var result = new Game(new[] {4, 4, 5});
+                var r = result.Ships.SelectMany(x => x.Segments.Select(y => y.Coordinates)).ToList();
+                r.Distinct().Count().Should().Be(r.Count(), result.GameDetailsToString());
+            }
         }
     }
 
-    public static class GameExtensions
+    public static class GameTestsExtensions
     {
         public static string GameDetailsToString(this Game g)
         {
