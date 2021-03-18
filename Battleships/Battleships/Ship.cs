@@ -1,11 +1,12 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 
 namespace Battleships
 {
     public class ShipSingleSegment
     {
         public Coordinates Coordinates { get; }
-        public bool IsHit { get; private set; }
+        public bool IsHit { get; set; }
 
         public ShipSingleSegment(Coordinates c)
         {
@@ -23,5 +24,21 @@ namespace Battleships
             Segments = segments;
             ShipId = shipId;
         }
+
+        public HitStatus GetHitStatus(Coordinates hitCoordinates)
+        {
+            if (!_anySegmentHit(hitCoordinates))
+                return HitStatus.Miss;
+            _markSegmentAsHit(hitCoordinates);
+            return _areAllSegmentsHit()
+                ? HitStatus.Sink
+                : HitStatus.Hit;
+        }
+
+        private bool _anySegmentHit(Coordinates hitCoordinates) => Segments.Any(x => x.Coordinates.Equals(hitCoordinates));
+
+        private void _markSegmentAsHit(Coordinates hitCoordinates) => Segments.Single(x => x.Coordinates.Equals(hitCoordinates)).IsHit = true;
+
+        private bool _areAllSegmentsHit() => Segments.All(x => x.IsHit);
     }
 }
