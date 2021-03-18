@@ -36,6 +36,7 @@ namespace BattleshipsTests
         [InlineData("10A")]
         [InlineData("AA")]
         [InlineData("110")]
+        [InlineData("")]
         public void GivenIncorrectInput_ItShouldReturnNull(string input)
         {
             Coordinates.TryCreateFromInput(input).Should().BeNull();

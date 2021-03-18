@@ -15,6 +15,9 @@ namespace Battleships
         
         public static Coordinates? TryCreateFromInput(string inputValue)
         {
+            if (inputValue.Length == 0)
+                return null;
+            
             var column = char.ToUpper(inputValue[0]) - 64;
             
             if(int.TryParse(inputValue.Substring(1), out var row))
