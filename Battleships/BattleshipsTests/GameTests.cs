@@ -39,6 +39,21 @@ namespace BattleshipsTests
                 r.Distinct().Count().Should().Be(r.Count(), result.GameDetailsToString());
             }
         }
+
+        [Fact]
+        public void GivenGameWithSingleShip_WhenHitAndSink_ItShouldReturnCorrectHitStatus()
+        {
+            // Arrange
+            var game = new Game(new[] {2});
+            var coordinates = game.Ships.Single().Segments.Select(x => x.Coordinates).ToList();
+
+            // Act && Assert
+            game.NextRound(coordinates[0]).Should().Be(HitStatus.Hit);
+            game.IsFinished().Should().BeFalse();
+
+            game.NextRound(coordinates[1]).Should().Be(HitStatus.Sink);
+            game.IsFinished().Should().BeTrue();
+        }
     }
 
     public static class GameTestsExtensions

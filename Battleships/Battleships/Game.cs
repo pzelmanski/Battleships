@@ -45,7 +45,11 @@ namespace Battleships
 
         public HitStatus NextRound(Coordinates hitCoordinates)
         {
-            throw new NotImplementedException();
+            var hits = Ships.Select(x => x.GetHitStatus(hitCoordinates)).Where(x => x != HitStatus.Miss).ToList();
+
+            return !hits.Any() ? HitStatus.Miss : hits.Single();
         }
+
+        public bool IsFinished() => Ships.All(x => x.IsShipSunk());
     }
 }

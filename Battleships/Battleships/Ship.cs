@@ -35,6 +35,8 @@ namespace Battleships
                 : HitStatus.Hit;
         }
 
+        public bool IsShipSunk() => _areAllSegmentsHit();
+        
         private bool _anySegmentHit(Coordinates hitCoordinates) => Segments.Any(x => x.Coordinates.Equals(hitCoordinates));
 
         private void _markSegmentAsHit(Coordinates hitCoordinates) => Segments.Single(x => x.Coordinates.Equals(hitCoordinates)).IsHit = true;

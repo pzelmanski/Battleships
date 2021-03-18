@@ -30,6 +30,8 @@ namespace BattleshipsTests
             miss.Should().Be(HitStatus.Miss);
             hit.Should().Be(HitStatus.Hit);
             sink.Should().Be(HitStatus.Sink);
+
+            ship.IsShipSunk().Should().BeTrue();
         }
     }
 }
