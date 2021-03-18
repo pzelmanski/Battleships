@@ -10,22 +10,25 @@ namespace BattleshipsTests
         [Fact]
         public void GivenLengthsArray_ItShouldGenerateCorrectAmountOfShips()
         {
-            var result = new Game(new[] {4, 4, 5});
-            result.Ships.Count.Should().Be(3, result.GameDetailsToString());
+            var game = new Game(new ShipFactory());
+            game.Init(new[] {4, 4, 5});
+            game.Ships.Count.Should().Be(3, game.GameDetailsToString());
         }
         
         [Fact]
         public void GivenLengthsArray_ItShouldGenerateShipsWithUniqueIds()
         {
-            var result = new Game(new[] {4, 4, 5});
-            result.Ships.Select(x => x.ShipId).Distinct().Should().HaveCount(3, result.GameDetailsToString());
+            var game = new Game(new ShipFactory());
+            game.Init(new[] {4, 4, 5});
+            game.Ships.Select(x => x.ShipId).Distinct().Should().HaveCount(3, game.GameDetailsToString());
         }
         
         [Fact]
         public void GivenAnotherLengthsArray_ItShouldGenerateCorrectAmountOfShips()
         {
-            var result = new Game(new[] {1, 1, 1, 1, 1, 1, 1});
-            result.Ships.Count.Should().Be(7);
+            var game = new Game(new ShipFactory());
+             game.Init(new[] {1, 1, 1, 1, 1, 1, 1});
+            game.Ships.Count.Should().Be(7);
         }
 
         // TODO: Its a perfect case for property - based testing
@@ -34,9 +37,10 @@ namespace BattleshipsTests
         {
             for (int i = 0; i < 100; i++)
             {
-                var result = new Game(new[] {4, 4, 5});
-                var r = result.Ships.SelectMany(x => x.Segments.Select(y => y.Coordinates)).ToList();
-                r.Distinct().Count().Should().Be(r.Count(), result.GameDetailsToString());
+                var game = new Game(new ShipFactory());
+                game.Init(new[] {4, 4, 5});
+                var r = game.Ships.SelectMany(x => x.Segments.Select(y => y.Coordinates)).ToList();
+                r.Distinct().Count().Should().Be(r.Count(), game.GameDetailsToString());
             }
         }
     }
