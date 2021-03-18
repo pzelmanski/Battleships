@@ -4,6 +4,14 @@ using System.Linq;
 
 namespace Battleships
 {
+    public enum GridDirection
+    {
+        Up = 0,
+        Down = 1,
+        Left = 2,
+        Right = 3
+    }
+
     public enum HitStatus
     {
         Miss = 0,
@@ -46,7 +54,10 @@ namespace Battleships
 
         public HitStatus NextRound(Coordinates hitCoordinates)
         {
-            var hits = Ships.Select(x => x.GetHitStatus(hitCoordinates)).Where(x => x != HitStatus.Miss).ToList();
+            var hits = Ships
+                .Select(x => x.GetHitStatus(hitCoordinates))
+                .Where(x => x != HitStatus.Miss)
+                .ToList();
 
             return !hits.Any() ? HitStatus.Miss : hits.Single();
         }

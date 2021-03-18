@@ -6,7 +6,7 @@ namespace Battleships
     public class ShipSingleSegment
     {
         public Coordinates Coordinates { get; }
-        public bool IsHit { get; set; }
+        public bool IsHit { get; set; } // TODO: Hide this IsHit somehow
 
         public ShipSingleSegment(Coordinates c)
         {
@@ -29,7 +29,9 @@ namespace Battleships
         {
             if (!_anySegmentHit(hitCoordinates))
                 return HitStatus.Miss;
+            
             _markSegmentAsHit(hitCoordinates);
+            
             return _areAllSegmentsHit()
                 ? HitStatus.Sink
                 : HitStatus.Hit;

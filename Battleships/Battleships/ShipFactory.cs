@@ -1,17 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 
 namespace Battleships
 {
-    public enum GridDirection
-    {
-        Up = 0,
-        Down = 1,
-        Left = 2,
-        Right = 3
-    }
-
     public static class ShipFactory
     {
         public static Ship? TryCreateShip(Coordinates initialPosition, GridDirection direction, int shipLength, List<Ship> otherShips, int shipIdsCounter)
@@ -36,10 +27,9 @@ namespace Battleships
                     .Any(x => x.Segments
                         .Any(y => y.Coordinates.Equals(s))));
 
-            if (isColliding)
-                return null;
-            
-            return new Ship(segments, shipIdsCounter);
+            return isColliding 
+                ? null 
+                : new Ship(segments, shipIdsCounter);
         }
     }
 }
