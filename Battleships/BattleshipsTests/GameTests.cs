@@ -61,5 +61,12 @@ namespace BattleshipsTests
             game.NextRound(coordinates[1]).Should().Be(HitStatus.Sink, game.ToString());
             game.IsFinished().Should().BeTrue(game.ToString());
         }
+
+        [Fact]
+        public void GivenGame_WhenGettingToString_ItShouldNotThrow()
+        {
+            var game = new Game(new[] {5, 6, 3});
+            game.ToString().Should().NotBeEmpty();
+        }
     }
 }

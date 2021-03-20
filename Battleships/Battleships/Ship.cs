@@ -24,6 +24,7 @@ namespace Battleships
                 IsHit = true;
             }
         }
+        
         public List<SingleSegmentSingleSegment> Segments { get; }
         public int ShipId { get; }
         public Ship(List<SingleSegmentSingleSegment> segments, int shipId)
