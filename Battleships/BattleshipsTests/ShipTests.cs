@@ -11,7 +11,7 @@ namespace BattleshipsTests
         public void GivenShip_WhenGettingHits_ItShouldReturnCorrectHitStatus()
         {
             // Arrange
-            var shipSegments = new List<ShipSingleSegment>
+            var shipSegments = new List<Ship.SingleSegmentSingleSegment>
             {
                 new(Coordinates.CreateOrThrow(1, 1)),
                 new(Coordinates.CreateOrThrow(1, 2))

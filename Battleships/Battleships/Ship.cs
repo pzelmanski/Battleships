@@ -1,25 +1,32 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace Battleships
 {
-    public class ShipSingleSegment
-    {
-        public Coordinates Coordinates { get; }
-        public bool IsHit { get; set; } // TODO: Hide this IsHit somehow
-
-        public ShipSingleSegment(Coordinates c)
-        {
-            Coordinates = c;
-            IsHit = false;
-        }
-    }
-
     public class Ship
     {
-        public List<ShipSingleSegment> Segments { get; }
+        public class SingleSegmentSingleSegment
+        {
+            public Coordinates Coordinates { get; }
+            public bool IsHit { get; private set; }
+
+            public SingleSegmentSingleSegment(Coordinates c)
+            {
+                Coordinates = c;
+                IsHit = false;
+            }
+
+            public void HitSegment(Coordinates hitCoordinates)
+            {
+                if (!hitCoordinates.Equals(Coordinates))
+                    throw new ArgumentException("Trying to mark wrong segment as hit");
+                IsHit = true;
+            }
+        }
+        public List<SingleSegmentSingleSegment> Segments { get; }
         public int ShipId { get; }
-        public Ship(List<ShipSingleSegment> segments, int shipId)
+        public Ship(List<SingleSegmentSingleSegment> segments, int shipId)
         {
             Segments = segments;
             ShipId = shipId;
@@ -27,10 +34,10 @@ namespace Battleships
         
         public static Ship? TryCreate(Coordinates initialPosition, GridDirection direction, int shipLength, List<Ship> otherShips, int shipIdsCounter)
         {
-            var segments = new List<ShipSingleSegment>();
+            var segments = new List<SingleSegmentSingleSegment>();
 
             var lastCoords = initialPosition;
-            segments.Add(new ShipSingleSegment(lastCoords));
+            segments.Add(new SingleSegmentSingleSegment(lastCoords));
             
             for (int i = 0; i < shipLength - 1; i++)
             {
@@ -38,7 +45,7 @@ namespace Battleships
                 if (newCoords == null)
                     return null;
                 lastCoords = newCoords;
-                segments.Add(new ShipSingleSegment(lastCoords));
+                segments.Add(new SingleSegmentSingleSegment(lastCoords));
             }
 
             var isColliding = segments
@@ -68,7 +75,7 @@ namespace Battleships
         
         private bool _anySegmentHit(Coordinates hitCoordinates) => Segments.Any(x => x.Coordinates.Equals(hitCoordinates));
 
-        private void _markSegmentAsHit(Coordinates hitCoordinates) => Segments.Single(x => x.Coordinates.Equals(hitCoordinates)).IsHit = true;
+        private void _markSegmentAsHit(Coordinates hitCoordinates) => Segments.Single(x => x.Coordinates.Equals(hitCoordinates)).HitSegment(hitCoordinates);
 
         private bool _areAllSegmentsHit() => Segments.All(x => x.IsHit);
     }
