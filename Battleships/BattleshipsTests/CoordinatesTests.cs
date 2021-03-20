@@ -80,6 +80,15 @@ namespace BattleshipsTests
                 result.Should().NotBeNull();
             }
 
+            [Fact]
+            public void GivenUnknownDirection_WhenTryingToCreateNext_ITShouldThrow()
+            {
+                var unexpectedDirection = (GridDirection)5;
+                var coordinate = Coordinates.CreateOrThrow(1, 1);
+
+                Assert.Throws<ArgumentOutOfRangeException>(() => coordinate.TryCreateNext(unexpectedDirection));
+            }
+
             [Theory]
             [InlineData(2, 2, GridDirection.Up, 1, 2)]
             [InlineData(2, 2, GridDirection.Left, 2, 1)]
@@ -123,6 +132,46 @@ namespace BattleshipsTests
                 var firstCoordinate = Coordinates.CreateOrThrow(3, 7);
                 var secondCoordinate = Coordinates.CreateOrThrow(7, 3);
                 firstCoordinate.Should().NotBe(secondCoordinate);
+            }
+
+            [Theory]
+            [InlineData(1, 1, 1, 1, true)]
+            [InlineData(1, 2, 2, 1, false)]
+            [InlineData(2, 1, 2, 2, false)]
+            [InlineData(1, 2, 2, 2, false)]
+            public void GivenTwoCoordinates_ShouldCompareCorrectly(int c1Row, int c1Col, int c2Row, int c2Col, bool expected)
+            {
+                var coordinates1 = Coordinates.CreateOrThrow(c1Row, c1Col);
+                var coordinates2 = Coordinates.CreateOrThrow(c2Row, c2Col);
+                coordinates1.Equals(coordinates2).Should().Be(expected);
+            }
+
+            [Fact]
+            public void GivenCoordinates_WhenComparingToNullObject_ShouldReturnFalse()
+            {
+                var coords = Coordinates.CreateOrThrow(1, 1);
+                coords.Equals((object)null).Should().BeFalse();
+            }
+            
+            [Fact]
+            public void GivenCoordinates_WhenComparingToNull_ShouldNotEqual()
+            {
+                var coords = Coordinates.CreateOrThrow(1, 1);
+                coords.Equals(null).Should().BeFalse();
+            }
+
+            [Fact]
+            public void GivenSameInstance_WhenCastAsObject_ShouldEqual()
+            {
+                var coords = Coordinates.CreateOrThrow(1, 1);
+                coords.Equals((object)coords).Should().BeTrue();
+            }
+            
+            [Fact]
+            public void GivenCoordinates_WhenComparingToAnotherType_ShouldNotEqual()
+            {
+                var coords = Coordinates.CreateOrThrow(1, 1);
+                coords.Equals(new object()).Should().BeFalse();
             }
         }
     }

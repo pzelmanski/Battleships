@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using Battleships;
 using FluentAssertions;
 using Xunit;
@@ -32,6 +33,15 @@ namespace BattleshipsTests
             sink.Should().Be(HitStatus.Sink);
 
             ship.IsShipSunk().Should().BeTrue();
+        }
+
+        [Fact]
+        public void GivenSegment_WhenTryingToHitWithDifferentCoordinates_ItShouldThrow()
+        {
+            var segment = new Ship.SingleSegmentSingleSegment(Coordinates.CreateOrThrow(1, 1));
+            var hitCoordinates = Coordinates.CreateOrThrow(2, 2);
+
+            Assert.Throws<ArgumentException>(() => segment.HitSegment(hitCoordinates));
         }
     }
 }
