@@ -40,7 +40,7 @@ namespace Battleships
                 var row = r.Next(1, 10);
                 var column = r.Next(1, 10);
                 var direction = (GridDirection) r.Next(1, 4);
-                newShip = ShipFactory.TryCreateShip(Coordinates.CreateOrThrow(row, column), direction, length, currentShips, _nextShipId);
+                newShip = Ship.TryCreate(Coordinates.CreateOrThrow(row, column), direction, length, currentShips, _nextShipId);
                 if (newShip is { })
                     break;
             }
