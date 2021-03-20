@@ -23,9 +23,9 @@ namespace BattleshipsTests
             var sinkCoordinates = Coordinates.CreateOrThrow(1, 2);
 
             // Act
-            var miss = ship.GetHitStatus(missCoordinates);
-            var hit = ship.GetHitStatus(hitCoordinates);
-            var sink = ship.GetHitStatus(sinkCoordinates);
+            var miss = ship.HitAndGetStatus(missCoordinates);
+            var hit = ship.HitAndGetStatus(hitCoordinates);
+            var sink = ship.HitAndGetStatus(sinkCoordinates);
 
             // Assert
             miss.Should().Be(HitStatus.Miss);

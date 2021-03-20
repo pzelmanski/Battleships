@@ -30,6 +30,18 @@ namespace Battleships
                 Ships.Add(GenerateShip(l, Ships));
         }
 
+        public HitStatus NextRound(Coordinates hitCoordinates)
+        {
+            var hits = Ships
+                .Select(x => x.HitAndGetStatus(hitCoordinates))
+                .Where(x => x != HitStatus.Miss)
+                .ToList();
+
+            return !hits.Any() ? HitStatus.Miss : hits.Single();
+        }
+
+        public bool IsFinished() => Ships.All(x => x.IsShipSunk());
+
         private Ship GenerateShip(int length, List<Ship> currentShips)
         {
             var r = new Random();
@@ -51,18 +63,6 @@ namespace Battleships
             _nextShipId++;
             return newShip;
         }
-
-        public HitStatus NextRound(Coordinates hitCoordinates)
-        {
-            var hits = Ships
-                .Select(x => x.GetHitStatus(hitCoordinates))
-                .Where(x => x != HitStatus.Miss)
-                .ToList();
-
-            return !hits.Any() ? HitStatus.Miss : hits.Single();
-        }
-
-        public bool IsFinished() => Ships.All(x => x.IsShipSunk());
 
         public override string ToString()
         {

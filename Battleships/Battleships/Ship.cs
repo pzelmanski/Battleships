@@ -60,7 +60,7 @@ namespace Battleships
                 : new Ship(segments, shipIdsCounter);
         }
 
-        public HitStatus GetHitStatus(Coordinates hitCoordinates)
+        public HitStatus HitAndGetStatus(Coordinates hitCoordinates)
         {
             if (!_anySegmentHit(hitCoordinates))
                 return HitStatus.Miss;
