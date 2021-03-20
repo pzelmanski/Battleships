@@ -6,7 +6,7 @@ using Xunit;
 
 namespace BattleshipsTests
 {
-    public class ShipFactoryTests
+    public class ShipCreationTests
     {
         [Fact]
         public void GivenCorrectShipPosition_WhenGridDirectionHorizontal_ItShouldReturnShip()

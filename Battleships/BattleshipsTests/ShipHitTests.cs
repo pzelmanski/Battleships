@@ -6,7 +6,7 @@ using Xunit;
 
 namespace BattleshipsTests
 {
-    public class ShipTests
+    public class ShipHitTests
     {
         [Fact]
         public void GivenShip_WhenGettingHits_ItShouldReturnCorrectHitStatus()

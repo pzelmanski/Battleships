@@ -63,5 +63,34 @@ namespace Battleships
         }
 
         public bool IsFinished() => Ships.All(x => x.IsShipSunk());
+
+        public override string ToString()
+        {
+            var result = "";
+            for (int i = 1; i < 11; i++)
+            {
+                for (int j = 1; j < 11; j++)
+                {
+                    var isSegment = false;
+                    foreach (var ship in Ships)
+                    {
+                        var segmentHit =
+                            ship.Segments.SingleOrDefault(x => x.Coordinates.Equals(Coordinates.CreateOrThrow(i, j)));
+                        if (segmentHit is null)
+                            continue;
+                        isSegment = true;
+                        var symbol = segmentHit.IsHit ? "X" : ship.ShipId.ToString();
+                        result += $"{symbol} ";
+                    }
+
+                    if (!isSegment)
+                        result += ("O ");
+                }
+
+                result += "\n";
+            }
+
+            return result;
+        }
     }
 }

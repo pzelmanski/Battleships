@@ -19,7 +19,7 @@ namespace Battleships
         static void Main(string[] args)
         {
             var game = new Game(new[] {4, 4, 5});
-            PrintBoard(game);
+            Console.WriteLine(game.ToString());
 
             // game loop
             while (true)
@@ -49,7 +49,7 @@ namespace Battleships
                         throw new ArgumentOutOfRangeException();
                 }
 
-                PrintBoard(game);
+                Console.WriteLine(game.ToString());
                 
                 if (game.IsFinished())
                     break;
@@ -57,32 +57,6 @@ namespace Battleships
 
             Console.WriteLine("END");
             Console.ReadKey();
-        }
-
-        private static void PrintBoard(Game game)
-        {
-            for (int i = 1; i < 11; i++)
-            {
-                for (int j = 1; j < 11; j++)
-                {
-                    bool isSegment = false;
-                    foreach (var ship in game.Ships)
-                    {
-                        var segmentHit =
-                            ship.Segments.SingleOrDefault(x => x.Coordinates.Equals(Coordinates.CreateOrThrow(i, j)));
-                        if (segmentHit is null)
-                            continue;
-                        isSegment = true;
-                        var symbol = segmentHit.IsHit ? "X" : ship.ShipId.ToString();
-                        Console.Write($"{symbol} ");
-                    }
-
-                    if (!isSegment)
-                        Console.Write("O ");
-                }
-
-                Console.WriteLine();
-            }
         }
     }
 }

@@ -12,7 +12,7 @@ namespace BattleshipsTests
         public void GivenLengthsArray_ItShouldGenerateCorrectAmountOfShips()
         {
             var result = new Game(new[] {4, 4, 5});
-            result.Ships.Count.Should().Be(3, result.GameDetailsToString());
+            result.Ships.Count.Should().Be(3, result.ToString());
         }
 
         [Fact]
@@ -25,7 +25,7 @@ namespace BattleshipsTests
         public void GivenLengthsArray_ItShouldGenerateShipsWithUniqueIds()
         {
             var result = new Game(new[] {4, 4, 5});
-            result.Ships.Select(x => x.ShipId).Distinct().Should().HaveCount(3, result.GameDetailsToString());
+            result.Ships.Select(x => x.ShipId).Distinct().Should().HaveCount(3, result.ToString());
         }
         
         [Fact]
@@ -43,7 +43,7 @@ namespace BattleshipsTests
             {
                 var result = new Game(new[] {4, 4, 5});
                 var r = result.Ships.SelectMany(x => x.Segments.Select(y => y.Coordinates)).ToList();
-                r.Distinct().Count().Should().Be(r.Count(), result.GameDetailsToString());
+                r.Distinct().Count().Should().Be(r.Count, result.ToString());
             }
         }
 
@@ -55,35 +55,11 @@ namespace BattleshipsTests
             var coordinates = game.Ships.Single().Segments.Select(x => x.Coordinates).ToList();
 
             // Act && Assert
-            game.NextRound(coordinates[0]).Should().Be(HitStatus.Hit);
-            game.IsFinished().Should().BeFalse();
+            game.NextRound(coordinates[0]).Should().Be(HitStatus.Hit, game.ToString());
+            game.IsFinished().Should().BeFalse(game.ToString());
 
-            game.NextRound(coordinates[1]).Should().Be(HitStatus.Sink);
-            game.IsFinished().Should().BeTrue();
-        }
-    }
-
-    public static class GameTestsExtensions
-    {
-        public static string GameDetailsToString(this Game g)
-        {
-            var result = "\n";
-            var allShipCoordinates = g.Ships.SelectMany(x => x.Segments.Select(y => (y.Coordinates, x.ShipId))).ToList();
-            for (int i = 1; i < 11; i++)
-            {
-                for (int j = 1; j < 11; j++)
-                {
-                    var coords = allShipCoordinates.SingleOrDefault(x => x.Coordinates.Equals(Coordinates.CreateOrThrow(i, j)));
-                    if(coords.Equals(default))
-                        result += "O ";
-                    else
-                        result += $"{coords.ShipId} ";
-                }
-
-                result += "\n";
-            }
-
-            return result;
+            game.NextRound(coordinates[1]).Should().Be(HitStatus.Sink, game.ToString());
+            game.IsFinished().Should().BeTrue(game.ToString());
         }
     }
 }
