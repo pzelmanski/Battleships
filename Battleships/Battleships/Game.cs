@@ -66,7 +66,8 @@ namespace Battleships
 
         public override string ToString()
         {
-            var result = "";
+            var result = "  A B C D E F G H I J \n1 ";
+            var rowSign = new[] {"1", "2", "3", "4", "5", "6", "7", "8", "9", "X"};
             for (int i = 1; i < 11; i++)
             {
                 for (int j = 1; j < 11; j++)
@@ -88,6 +89,7 @@ namespace Battleships
                 }
 
                 result += "\n";
+                result += i == 10 ? "" : $"{rowSign[i]} ";
             }
 
             return result;
