@@ -24,31 +24,14 @@ namespace Battleships
             // game loop
             while (true)
             {
-                var input = Console.ReadLine();
-                var hitCoordinates = Coordinates.TryCreateFromUserInput(input ?? "");
+                var hitCoordinates = Coordinates.TryCreateFromUserInput(Console.ReadLine() ?? "");
                 if (hitCoordinates is null)
                 {
                     Console.WriteLine("Incorrect user input. Try again");
                     continue;
                 }
 
-                var hitStatus = game.NextRound(hitCoordinates);
-
-                switch (hitStatus)
-                {
-                    case HitStatus.Miss:
-                        Console.WriteLine("Miss!");
-                        break;
-                    case HitStatus.Hit:
-                        Console.WriteLine("Hit!");
-                        break;
-                    case HitStatus.Sink:
-                        Console.WriteLine("Sink!");
-                        break;
-                    default:
-                        throw new ArgumentOutOfRangeException();
-                }
-
+                Console.WriteLine(game.NextRound(hitCoordinates).ToString());
                 Console.WriteLine(game.ToString());
                 
                 if (game.IsFinished())

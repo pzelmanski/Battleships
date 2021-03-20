@@ -84,7 +84,7 @@ namespace Battleships
                     }
 
                     if (!isSegment)
-                        result += ("O ");
+                        result += "O ";
                 }
 
                 result += "\n";
