@@ -5,7 +5,7 @@ using Xunit;
 
 namespace BattleshipsTests
 {
-    public class CoordinatesTests
+    public class CoordinatesCreationTests
     {
         [Theory]
         [InlineData("A1", 1, 1)]
@@ -81,9 +81,9 @@ namespace BattleshipsTests
             }
 
             [Fact]
-            public void GivenUnknownDirection_WhenTryingToCreateNext_ITShouldThrow()
+            public void GivenUnknownDirection_WhenTryingToCreateNext_ItShouldThrow()
             {
-                var unexpectedDirection = (GridDirection)5;
+                var unexpectedDirection = (GridDirection) 5;
                 var coordinate = Coordinates.CreateOrThrow(1, 1);
 
                 Assert.Throws<ArgumentOutOfRangeException>(() => coordinate.TryCreateNext(unexpectedDirection));
@@ -117,7 +117,10 @@ namespace BattleshipsTests
                 var result = coordinateBefore.TryCreateNext(direction);
                 result.Should().BeNull();
             }
+        }
 
+        public class CoordinatesComparingTests
+        {
             [Fact]
             public void GivenTwoCoordinates_WhenRowAndColumnEquals_EqualsShouldBeTrue()
             {
@@ -139,7 +142,8 @@ namespace BattleshipsTests
             [InlineData(1, 2, 2, 1, false)]
             [InlineData(2, 1, 2, 2, false)]
             [InlineData(1, 2, 2, 2, false)]
-            public void GivenTwoCoordinates_ShouldCompareCorrectly(int c1Row, int c1Col, int c2Row, int c2Col, bool expected)
+            public void GivenTwoCoordinates_ShouldCompareCorrectly(int c1Row, int c1Col, int c2Row, int c2Col,
+                bool expected)
             {
                 var coordinates1 = Coordinates.CreateOrThrow(c1Row, c1Col);
                 var coordinates2 = Coordinates.CreateOrThrow(c2Row, c2Col);
@@ -150,9 +154,9 @@ namespace BattleshipsTests
             public void GivenCoordinates_WhenComparingToNullObject_ShouldReturnFalse()
             {
                 var coords = Coordinates.CreateOrThrow(1, 1);
-                coords.Equals((object)null).Should().BeFalse();
+                coords.Equals((object) null).Should().BeFalse();
             }
-            
+
             [Fact]
             public void GivenCoordinates_WhenComparingToNull_ShouldNotEqual()
             {
@@ -164,9 +168,9 @@ namespace BattleshipsTests
             public void GivenSameInstance_WhenCastAsObject_ShouldEqual()
             {
                 var coords = Coordinates.CreateOrThrow(1, 1);
-                coords.Equals((object)coords).Should().BeTrue();
+                coords.Equals((object) coords).Should().BeTrue();
             }
-            
+
             [Fact]
             public void GivenCoordinates_WhenComparingToAnotherType_ShouldNotEqual()
             {
