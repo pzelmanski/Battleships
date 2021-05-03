@@ -1,8 +1,15 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Battleships", "Battleships\Battleships.csproj", "{4C8030BF-374A-417F-8272-FEF6C2D296A3}"
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.31105.61
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Battleships", "Battleships\Battleships.csproj", "{4C8030BF-374A-417F-8272-FEF6C2D296A3}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BattleshipsTests", "BattleshipsTests\BattleshipsTests.csproj", "{F61B1E65-017E-418B-BCC9-B39DB78ADD5F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BattleshipsTests", "BattleshipsTests\BattleshipsTests.csproj", "{F61B1E65-017E-418B-BCC9-B39DB78ADD5F}"
+EndProject
+Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "Fattleships", "Fattleships\Fattleships.fsproj", "{795645B3-ECFE-450D-B2CF-F7899C7E586B}"
+EndProject
+Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "FattleshipsTests", "FattleshipsTests\FattleshipsTests.fsproj", "{FC1EF6AF-4A88-42F7-ACC0-4F653466E4FF}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -18,5 +25,19 @@ Global
 		{F61B1E65-017E-418B-BCC9-B39DB78ADD5F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F61B1E65-017E-418B-BCC9-B39DB78ADD5F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F61B1E65-017E-418B-BCC9-B39DB78ADD5F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{795645B3-ECFE-450D-B2CF-F7899C7E586B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{795645B3-ECFE-450D-B2CF-F7899C7E586B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{795645B3-ECFE-450D-B2CF-F7899C7E586B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{795645B3-ECFE-450D-B2CF-F7899C7E586B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FC1EF6AF-4A88-42F7-ACC0-4F653466E4FF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FC1EF6AF-4A88-42F7-ACC0-4F653466E4FF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FC1EF6AF-4A88-42F7-ACC0-4F653466E4FF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FC1EF6AF-4A88-42F7-ACC0-4F653466E4FF}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {551B596A-CC22-49A4-B198-BEBF8E93B0B9}
 	EndGlobalSection
 EndGlobal
