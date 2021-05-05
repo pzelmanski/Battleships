@@ -1,13 +1,17 @@
 <Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <OutputType>Exe</OutputType>
-    <TargetFramework>net5.0</TargetFramework>
+    <TargetFramework>net48</TargetFramework>
     <RootNamespace>Fattleships</RootNamespace> 
 
   </PropertyGroup>
 
   <ItemGroup>
     <Compile Include="Test.fs" />
+    <Compile Include="Domain.fs" />
+    <Compile Include="Init.fs" />
+    <Compile Include="GameLoop.fs" />
+    <Compile Include="Printer.fs" />
     <Compile Include="Program.fs" />
   </ItemGroup>
 </Project>
