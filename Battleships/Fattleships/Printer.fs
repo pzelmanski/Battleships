@@ -24,3 +24,17 @@
                     "X")
         |> List.mapi (fun i x -> if (i % 10 = 0) then "\n" + x else x)
         |> List.fold (+) ""
+        
+    let printBoard allShips =
+        let message = getBoard allShips
+        printfn "Board:%s" message
+
+    let printRoundResult result =
+        let message =
+            match result with
+            | InvalidInput -> "Invalid input"
+            | Hit -> "Hit"
+            | Miss -> "Miss"
+            | Sink -> "Sink"
+
+        printfn "Round result: %s" message

@@ -1,31 +1,36 @@
-﻿// Learn more about F# at http://docs.microsoft.com/dotnet/fsharp
-// See the 'F# Tutorial' project for more help.
+﻿open Domain
 
-// Define a function to construct a message to print
+let isSink (ship: Ship) =
+    List.fold (&&) true (List.map (fun x -> x.IsHit) ship.Coordinates)
 
-open Domain
+let areAllShipsSink (allShips: Ship list) =
+    List.map isSink allShips |> List.fold (&&) true
 
-let printBoard allShips =
-    let message = Printer.getBoard allShips
-    printfn "Board:%s" message
-    
-let printRoundResult result =
-    let message = match result with
-                    | InvalidInput -> "Invalid input"
-                    | Hit -> "Hit"
-                    | Miss -> "Miss"
-                    | Sink -> "Sink"
-    printfn "Round result: %s" message
+let rec nextRound allShips input roundNumber =
+    let result = GameLoop.nextRound allShips input
+
+    printfn $"\n ==== \nRound number %s{string roundNumber} \n === \n"
+    Printer.printRoundResult result.RoundResult
+    Printer.printBoard result.Ships
+
+    if (areAllShipsSink allShips) then
+        exit 0
+    else
+        let input = System.Console.ReadLine() |> UserInput
+        nextRound result.Ships input (roundNumber + 1)
+
+let Play = 
+    let allShips =
+        Init.InitGame [ ShipLength 1
+                        ShipLength 1 ]
+
+    Printer.printBoard allShips
+
+
+    let input = System.Console.ReadLine() |> UserInput
+    nextRound allShips input 1
 
 [<EntryPoint>]
 let main argv =
-    let allShips = Init.InitGame [ShipLength 1;ShipLength 1]
-    printBoard allShips
-    
-    
-    let input = System.Console.ReadLine() |> UserInput
-    let result = GameLoop.nextRound allShips input
-    
-    printRoundResult result.RoundResult
-    printBoard result.Ships
-    0 // return an integer exit code
+    Play()
+    0
