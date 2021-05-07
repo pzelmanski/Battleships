@@ -21,7 +21,7 @@ let rec nextRound allShips input roundNumber =
 
 let Play = 
     let allShips =
-        Init.InitGame [ ShipLength 1
+        Init.InitGame [ ShipLength 5
                         ShipLength 1 ]
 
     Printer.printBoard allShips

@@ -16,7 +16,19 @@ let isShipWithinBoard ship =
 [<Fact>]
 let ``should init single ship correctly``() =
     let ships = Init.InitGame [ShipLength 1;ShipLength 2]
-    Assert.Equal(2, List.length ships)
+    
+    List.length ships |> should equal 2
+    
+    List.map isShipWithinBoard ships
+    |> List.fold (fun x y -> x && y) true
+    |> should equal true
+    
+[<Fact>]
+let ``should init single ship correctly2``() =
+    let ships = Init.InitGame [ShipLength 3;ShipLength 2; ShipLength 5]
+    
+    List.length ships |> should equal 3
+    
     List.map isShipWithinBoard ships
     |> List.fold (fun x y -> x && y) true
     |> should equal true
