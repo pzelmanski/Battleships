@@ -35,3 +35,23 @@ let ``should init single ship correctly2``() =
     
 let mulByTwoAddOneAndDivideBy x y =
     (x * 2 + 1) / y
+
+
+let isAnyOverlapping coord coords =
+    coords
+    |> List.where (fun x -> x = coord)
+    |> List.length > 1
+
+[<Fact>]
+let ``ships should not overlap`` () =
+    let ships = Init.InitGame [ShipLength 5; ShipLength 4; ShipLength 3]
+    
+    let coords = ships
+                |> List.map(fun x -> x.Coordinates |> List.map(fun y -> y.Coordinate))
+                |> List.concat
+                
+    coords
+    |> List.map (fun x -> isAnyOverlapping x coords)
+    |> List.fold(fun x y -> x || y) false
+    |> should equal false 
+    

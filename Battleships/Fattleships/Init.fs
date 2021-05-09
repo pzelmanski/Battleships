@@ -1,15 +1,24 @@
 ﻿module Init
 
+open System
 open Domain
 
 type ShipDirection =
     | Horizontal
     | Vertical
+    
+let isCoordWithinBoard (coord:Coordinate) =
+    coord.Row >= 1 && coord.Row <= 10
+    && coord.Col >= 1 && coord.Col <= 10
 
-let rec generateNextSingleCoord (coordsSoFar: Coordinate list) direction lengthLeft : Coordinate list =
-    //TODO: If generated incorrect coords, restart from the beginning
+let isThereAlreadyShipOnCoord(coord:Coordinate) allShips =
+    allShips
+    |> List.where (fun x -> x = coord)
+    |> List.length > 0
+
+let rec private generateNextSingleCoord (coordsSoFar: Coordinate list) direction lengthLeft : Coordinate list option =
     if (lengthLeft = 0) then
-        coordsSoFar
+        Some coordsSoFar
     else
         let nextCoords =
             match direction with
@@ -19,15 +28,24 @@ let rec generateNextSingleCoord (coordsSoFar: Coordinate list) direction lengthL
             | Vertical ->
                 List.last coordsSoFar
                 |> (fun { Row = r; Col = c } -> coordsSoFar @ [ { Row = r + 1; Col = c } ])
+        if isCoordWithinBoard (List.last nextCoords)
+//           || isThereAlreadyShipOnCoord (List.last nextCoords)
+           then 
+            generateNextSingleCoord nextCoords direction (lengthLeft - 1)
+        else
+            None
 
-        generateNextSingleCoord nextCoords direction (lengthLeft - 1)
-
-let generateCoords (ShipLength shipLength) =
-    // TODO: Randomize headPos and generaitonDirection
-    let headPos = (1, 1)
+let rec private generateCoords (ShipLength shipLength) =
+    let r = Random()
+    let headPos = (r.Next(1, 10), r.Next(1, 10))
     let headCoord = { Row = fst headPos; Col = snd headPos }
-    let generationDirection = Horizontal
-    generateNextSingleCoord [ headCoord ] generationDirection (shipLength - 1)
+    let generationDirection = match r.Next(1, 2) with
+                                | 1 -> Horizontal
+                                | 2 -> Vertical
+                                | _ -> failwith "direction random out of range"
+    match generateNextSingleCoord [ headCoord ] generationDirection (shipLength - 1) with
+    | Some x -> x
+    | None -> generateCoords (ShipLength shipLength)
 
 
 let private generateShips (lengths: ShipLength list) : Ship list =
