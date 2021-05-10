@@ -15,8 +15,14 @@ let isThereAlreadyShipOnCoord(coord:Coordinate) allShips =
     allShips
     |> List.where (fun x -> x = coord)
     |> List.length > 0
+    
+let isColliding coord (allShips : Coordinate list list) =
+    allShips
+    |> List.concat
+    |> isThereAlreadyShipOnCoord coord
 
-let rec private generateNextSingleCoord (coordsSoFar: Coordinate list) direction lengthLeft : Coordinate list option =
+// PURE
+let rec private generateNextSingleCoord otherShips (coordsSoFar: Coordinate list) direction lengthLeft : Coordinate list option =
     if (lengthLeft = 0) then
         Some coordsSoFar
     else
@@ -28,14 +34,14 @@ let rec private generateNextSingleCoord (coordsSoFar: Coordinate list) direction
             | Vertical ->
                 List.last coordsSoFar
                 |> (fun { Row = r; Col = c } -> coordsSoFar @ [ { Row = r + 1; Col = c } ])
-        if isCoordWithinBoard (List.last nextCoords)
-//           || isThereAlreadyShipOnCoord (List.last nextCoords)
+        if isCoordWithinBoard (List.last nextCoords) && not (isColliding (List.last nextCoords) otherShips)
            then 
-            generateNextSingleCoord nextCoords direction (lengthLeft - 1)
+            generateNextSingleCoord otherShips nextCoords direction (lengthLeft - 1)
         else
             None
 
-let rec private generateCoords (ShipLength shipLength) =
+// IMPURE
+let rec private generateCoords (allShips: Coordinate list list) (ShipLength shipLength) =
     let r = Random()
     let headPos = (r.Next(1, 10), r.Next(1, 10))
     let headCoord = { Row = fst headPos; Col = snd headPos }
@@ -43,14 +49,15 @@ let rec private generateCoords (ShipLength shipLength) =
                                 | 1 -> Horizontal
                                 | 2 -> Vertical
                                 | _ -> failwith "direction random out of range"
-    match generateNextSingleCoord [ headCoord ] generationDirection (shipLength - 1) with
-    | Some x -> x
-    | None -> generateCoords (ShipLength shipLength)
+    match generateNextSingleCoord allShips [ headCoord ] generationDirection (shipLength - 1) with
+    | Some x -> allShips@[x]
+    | None -> generateCoords allShips (ShipLength shipLength)
 
 
 let private generateShips (lengths: ShipLength list) : Ship list =
+    let x = [] : Coordinate list list
     lengths
-    |> List.map generateCoords
+    |> List.fold (fun all curr -> generateCoords all curr) x
     |> List.map
         (fun x ->
             x
@@ -58,3 +65,4 @@ let private generateShips (lengths: ShipLength list) : Ship list =
     |> List.mapi (fun i c -> { Coordinates = c; Id = i })
 
 let InitGame (shipLengths: ShipLength list) : Ship list = generateShips shipLengths
+
