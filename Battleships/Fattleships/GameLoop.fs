@@ -3,16 +3,31 @@
 open Domain
 
 
-let charToInt c =
-    int c - int '0'
+let charNumberToInt c = int c - int '0'
+
+let charLetterToInt c = int c - int 'a' + 1
 
 
 let mapInput (UserInput rawInput) : Coordinate option =
-    // TODO: Handle incorrect input    
+    // TODO: Handle incorrect input
     match String.length rawInput with
-    | 2 -> let row = charToInt rawInput.[0]
-           let col = int rawInput.[1]
-           Some { Row = row; Col = col }
+    | 2 ->
+        let col = charLetterToInt rawInput.[0]
+
+        if (col < 1 || col > 10) then
+            None
+        else
+            let row = charNumberToInt rawInput.[1]
+            printf $"Row: {col}, Col: {row}"
+            Some { Row = col; Col = row }
+    | 3 ->
+        let col = charLetterToInt rawInput.[0]
+
+        if (rawInput.[1] = '1' && rawInput.[2] = '0') then
+            printf $"Row: {col}, Col: {10}"
+            Some { Row = 10; Col = col }
+        else
+            None
     | _ -> None
 
 type HitOrMiss =
