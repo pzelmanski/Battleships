@@ -2,11 +2,8 @@
 
 open Domain
 
-
-let charNumberToInt c = int c - int '0'
-
 let charLetterToInt c = int c - int 'a' + 1
-
+let charNumberToInt c = int c - int '0'
 
 let mapInput (UserInput rawInput) : Coordinate option =
     // TODO: Handle incorrect input
@@ -83,6 +80,8 @@ let shoot (allShips: Ship list) (hitCoord: Coordinate) : NextRound =
              |> List.where (fun x -> not (x.Id = shipAfterHit.Id)))
             @ [ shipAfterHit ]
 
+        printfn $"Hit or sink!"
+        
         { Ships = allShipsAfterHit
           RoundResult =
               isSink shipAfterHit

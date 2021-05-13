@@ -16,7 +16,7 @@ let getBoard (allShips: Ship list) =
 
     let p =
         List.allPairs rows cols
-        |> List.map (fun (x, y) -> { Row = x; Col = y })
+        |> List.map (fun (x, y) -> { Row = y; Col = x })
         |> List.map
             (fun c ->
                 if (List.contains c (allCoords |> List.map fst)) then
