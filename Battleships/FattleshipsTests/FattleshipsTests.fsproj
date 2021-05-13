@@ -11,6 +11,7 @@
     <Compile Include="InitTests.fs" />
     <Compile Include="InitPbtTests.fs" />
     <Compile Include="pbtTest.fs" />
+    <Compile Include="ShootTests.fs" />
     <Compile Include="Program.fs" />
   </ItemGroup>
 
