@@ -13,7 +13,8 @@ let rec nextRound allShips input roundNumber =
     Printer.printRoundResult result.RoundResult
     Printer.printBoard result.Ships
 
-    if (areAllShipsSink allShips) then
+    if (areAllShipsSink result.Ships) then
+        printfn $"All ships sink, closing"
         exit 0
     else
         let input = System.Console.ReadLine() |> UserInput
