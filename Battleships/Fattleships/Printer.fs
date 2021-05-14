@@ -2,42 +2,48 @@
 
 open Domain
 
+let getShipByCoord (allShips: Ship list) coord =
+    let shipOnCoordList =
+        allShips
+        |> List.filter
+            (fun x ->
+                x.Coordinates
+                |> List.map (fun y -> y.Coordinate)
+                |> List.map (fun y -> y = coord)
+                |> List.fold (fun x y -> x || y) false)
+
+    match List.length shipOnCoordList with
+    | 0 -> "X"
+    | 1 ->
+        let ship = List.last shipOnCoordList
+
+        let isHit =
+            ship.Coordinates
+            |> List.filter (fun x -> x.Coordinate = coord)
+            |> List.last
+            |> fun x -> x.IsHit
+
+        if isHit then "-" else string ship.Id
+    | _ -> failwith "Two ships on a single coord"
+
 let getBoard (allShips: Ship list) =
     let rows = [ 1 .. 10 ]
     let cols = [ 1 .. 10 ]
 
-    let allCoords =
-        allShips
-        |> List.map (fun x -> (x.Coordinates |> List.map (fun c -> c.Coordinate), x.Id))
-        |> List.map (fun (x, y) -> x |> List.map (fun c -> (c, y)))
-        |> List.concat
-
     let mutable rowNum = 0
 
-    let p =
-        List.allPairs rows cols
-        |> List.map (fun (x, y) -> { Row = y; Col = x })
-        |> List.map
-            (fun c ->
-                if (List.contains c (allCoords |> List.map fst)) then
-                    List.filter (fun (x, y) -> x = c) allCoords
-                    |> List.last
-                    |> snd
-                    |> string
-                    |> (+) " "
-                else
-                    " X")
-        |> List.mapi
-            (fun i x ->
-                if (i % 10 = 0) then
-                    rowNum <- rowNum + 1
-                    $"\n{rowNum}" + x
-                else
-                    x)
-    //        List.mapi (fun i x -> printfn $"X: {x}, I: {i}") |> ignore
-    p
+    List.allPairs rows cols
+    |> List.map (fun (x, y) -> { Row = y; Col = x })
+    |> List.map (fun c -> (+) " " (getShipByCoord allShips c))
+    |> List.mapi
+        (fun i x ->
+            if (i % 10 = 0) then
+                rowNum <- rowNum + 1
+                $"\n{rowNum}|" + x
+            else
+                x)
     |> List.fold (+) " "
-    |> (+) "  A B C D E F G H I J"
+    |> (+) "   A B C D E F G H I J"
 
 let printBoard allShips =
     let message = getBoard allShips
